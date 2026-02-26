@@ -65,7 +65,8 @@ const Dashboard = () => {
 
   }
   const handleCopy = (shortCode: string) => {
-    const fullUrl = `http://localhost:3000/url/${shortCode}`;
+    const BACKEND_URL = import.meta.env.BACKEND_URL;
+    const fullUrl = `${BACKEND_URL}/url/${shortCode}`;
     navigator.clipboard.writeText(fullUrl);
     setCopied(shortCode);
     setTimeout(() => setCopied(null), 2000); // Reset after 2 seconds

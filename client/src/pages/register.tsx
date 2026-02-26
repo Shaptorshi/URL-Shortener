@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import { api } from '../api/axios'
 import { useAuth } from '../context/authContext';
 
@@ -18,7 +18,7 @@ const register = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await api.post('/auth/registerUser', formData);
+        const response = await api.post('/registerUser', formData);
 
         try {
             login(response.data.token, response.data.user);
@@ -55,7 +55,7 @@ const register = () => {
                 <button className='w-full bg-blue-600 p-2 rounded text-white hover:bg-blue-700 hover:cursor-pointer'>
                     Register
                 </button>
-                <p className='text-blue-500 '>If already registered?<a href="/loginUser" className='hover:cursor-pointer '>Login here</a></p>
+                <p className='text-blue-500 '>If already registered?<Link to={'/loginUser'} className='hover:cursor-pointer '>Login here</Link></p>
             </form>
         </div>
     )

@@ -79,3 +79,25 @@ export const getAllUrls = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const deleteUrl = async (req:Request,res:Response)=>{
+    try {
+        const {id} = req.params;
+        const user = (req as any).user;
+        const url = await Url.findById(id);
+
+        if(!url){
+            return res.status(400).json({message:"URL not found"});
+        }
+
+        if(!user||url?.userId?.toString()!==user.id){
+            return res.status(403).json({message:"Unauthorized"});
+        }
+
+        await Url.findByIdAndDelete(id);
+
+        await redis.del(url.shortCode);
+    } catch (error) {
+        res.status(500).json({message:"Error occurred",error})
+    }
+}

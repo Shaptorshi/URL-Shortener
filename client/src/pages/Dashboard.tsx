@@ -66,7 +66,7 @@ const Dashboard = () => {
   }
   const handleCopy = (shortCode: string) => {
     // const BACKEND_URL = import.meta.env.BACKEND_URL;
-    const fullUrl = `${import.meta.env.BACKEND_URL}/url/${shortCode}`;
+    const fullUrl = `${import.meta.env.VITE_BACKEND_URL}/url/${shortCode}`;
     navigator.clipboard.writeText(fullUrl);
     setCopied(shortCode);
     setTimeout(() => setCopied(null), 2000); // Reset after 2 seconds
@@ -86,7 +86,7 @@ const Dashboard = () => {
         prevUrls.filter((url) => url._id !== id)
       )
     } catch (error) {
-        alert("Url cannot be deleted");
+      alert("Url cannot be deleted");
     }
   }
   return (
@@ -245,11 +245,11 @@ const Dashboard = () => {
                     ) : (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     )}
-                    <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={()=>{handleDelete}}>
-                      🗑
-                    </button>
 
 
+                  </button>
+                  <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={() => { handleDelete }}>
+                    🗑
                   </button>
 
                 </div>

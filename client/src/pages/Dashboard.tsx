@@ -201,7 +201,7 @@ const Dashboard = () => {
                       className='text-blue-400 hover:text-blue-300 font-semibold text-lg tracking-wide flex items-center gap-1 group-hover:underline decoration-blue-500/30 underline-offset-4'
                       onClick={() => handleLinkClick(url.shortCode)}
                     >
-                      localhost:3000/url/{url.shortCode}
+                      {import.meta.env.VITE_BACKEND_URL}/url/{url.shortCode}
                       <span className='opacity-0 group-hover:opacity-100 transition-opacity text-xs'>↗</span>
                     </a>
                   </div>

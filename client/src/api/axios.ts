@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL:import.meta.env.BACKEND_URL,
+    baseURL:import.meta.env.VITE_BACKEND_URL,
     withCredentials:true,
     headers:{
         "Content-Type":"application/json"
@@ -23,7 +23,7 @@ api.interceptors.request.use(
 //middleware for incoming responses
 api.interceptors.response.use(
     (res)=>res,(error)=>{
-        if(error.res?.status===401){
+        if(error.response?.status===401){
             localStorage.removeItem("token");
             window.location.href="/loginUser";
         }

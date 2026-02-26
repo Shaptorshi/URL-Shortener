@@ -43,7 +43,7 @@ const Dashboard = () => {
         setIsAuthModalOpen(true);
         return;
       }
-      const response = await api.post('/url', { originalUrl },
+      const response = await api.post('/', { originalUrl },
         token ?
           { headers: { Authorization: `Bearer ${token}` } }
           : {}
@@ -65,8 +65,8 @@ const Dashboard = () => {
 
   }
   const handleCopy = (shortCode: string) => {
-    const BACKEND_URL = import.meta.env.BACKEND_URL;
-    const fullUrl = `${BACKEND_URL}/${shortCode}`;
+    // const BACKEND_URL = import.meta.env.BACKEND_URL;
+    const fullUrl = `${import.meta.env.BACKEND_URL}/${shortCode}`;
     navigator.clipboard.writeText(fullUrl);
     setCopied(shortCode);
     setTimeout(() => setCopied(null), 2000); // Reset after 2 seconds

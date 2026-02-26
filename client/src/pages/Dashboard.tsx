@@ -195,7 +195,7 @@ const Dashboard = () => {
                 <div className='flex-1 min-w-0 w-full'>
                   <div className='flex items-center gap-3 mb-1'>
                     <a
-                      href={`http://localhost:3000/url/${url.shortCode}`}
+                      href={`${import.meta.env.VITE_BACKEND_URL}/url/${url.shortCode}`}
                       target='_blank'
                       rel="noopener noreferrer"
                       className='text-blue-400 hover:text-blue-300 font-semibold text-lg tracking-wide flex items-center gap-1 group-hover:underline decoration-blue-500/30 underline-offset-4'

@@ -75,6 +75,20 @@ const Dashboard = () => {
   const handleLinkClick = (shortCode: string) => {
     setUrls((prevUrls) => prevUrls.map((url) => url.shortCode === shortCode ? { ...url, clicks: url.clicks + 1 } : url))
   }
+
+  const handleDelete = async (id: string) => {
+    try {
+      await api.delete(`${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+
+      setUrls((prevUrls) =>
+        prevUrls.filter((url) => url._id !== id)
+      )
+    } catch (error) {
+        alert("Url cannot be deleted");
+    }
+  }
   return (
     <div className='min-h-screen bg-gray-950 text-gray-100 font-sans selection:bg-blue-500/30'>
       {isAuthModalOpen && (
@@ -231,6 +245,11 @@ const Dashboard = () => {
                     ) : (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     )}
+                    <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={()=>{handleDelete}}>
+                      🗑
+                    </button>
+
+
                   </button>
 
                 </div>

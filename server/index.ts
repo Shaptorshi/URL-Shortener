@@ -6,7 +6,7 @@ import app from './app';
 import {dbConnect} from './config/db';
 
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 const startServer = async()=>{
     await dbConnect();

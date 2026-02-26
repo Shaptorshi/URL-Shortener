@@ -8,7 +8,7 @@ import authRoute from './routes/auth.routes'
 const app: Application = express();
 
 app.use(cors({
-    origin: 'https://linktrim-smoky.vercel.app/',
+    origin: 'https://linktrim-smoky.vercel.app',
     credentials: true,
 }));
 app.use(express.json());

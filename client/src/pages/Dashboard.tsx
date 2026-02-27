@@ -88,7 +88,7 @@ const Dashboard = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await api.delete(`${id}`, {
+      await api.delete(`/url/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
 
@@ -96,7 +96,7 @@ const Dashboard = () => {
         prevUrls.filter((url) => url._id !== id)
       )
     } catch (error) {
-      alert("Url cannot be deleted");
+      setError("Unable to delete the link! Please try again")
     }
   }
   return (

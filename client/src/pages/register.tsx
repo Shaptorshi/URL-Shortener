@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate,Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { api } from '../api/axios'
 import { useAuth } from '../context/authContext';
 
@@ -18,11 +18,11 @@ const register = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await api.post('/auth/registerUser', formData);
 
         try {
+            const response = await api.post('/auth/registerUser', formData);
             login(response.data.token, response.data.user);
-            navigate('/auth/loginUser');
+            navigate('/');
         } catch (error: any) {
             alert(error.response?.data?.message);
         }

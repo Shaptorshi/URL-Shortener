@@ -28,15 +28,15 @@ const Dashboard = () => {
       setUrls([]);
     }
   }, [token])
-  useEffect(()=>{
-    if(!error) return;
+  useEffect(() => {
+    if (!error) return;
 
-    const timer = setTimeout(()=>{
+    const timer = setTimeout(() => {
       setError(null)
-    },4000);
+    }, 4000);
 
-    return ()=>clearTimeout(timer);
-  },[error]);
+    return () => clearTimeout(timer);
+  }, [error]);
 
   const fetchUrl = async () => {
     const response = await api.get('/url', {
@@ -272,7 +272,10 @@ const Dashboard = () => {
 
 
                   </button>
-                  <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={() => { handleDelete(url._id) }}>
+                  <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={() => {
+                    if (!url._id) return;
+                    handleDelete(url._id)
+                  }}>
                     🗑
                   </button>
 

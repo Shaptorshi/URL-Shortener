@@ -35,7 +35,7 @@ export const Register = async (req: Request, res: Response) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
-                password: user.password
+                // password: user.password
             }
         })
     } catch (error) {

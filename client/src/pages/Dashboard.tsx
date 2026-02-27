@@ -36,7 +36,7 @@ const Dashboard = () => {
     },4000);
 
     return ()=>clearTimeout(timer);
-  },[]);
+  },[error]);
 
   const fetchUrl = async () => {
     const response = await api.get('/url', {

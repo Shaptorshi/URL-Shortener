@@ -4,6 +4,6 @@ export const generateToken = (userId:string):string =>{
     return jwt.sign(
         {id:userId},
         process.env.JWT_SECRET_KEY as string,
-        {expiresIn:"7d"},
+        {expiresIn:"10m"},
     )
 }

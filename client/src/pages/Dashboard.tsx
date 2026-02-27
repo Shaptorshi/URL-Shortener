@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [copied, setCopied] = useState<string | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('Create your account to save your shortened links permanently')
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (token) {
@@ -27,6 +28,15 @@ const Dashboard = () => {
       setUrls([]);
     }
   }, [token])
+  useEffect(()=>{
+    if(!error) return;
+
+    const timer = setTimeout(()=>{
+      setError(null)
+    },4000);
+
+    return ()=>clearTimeout(timer);
+  },[]);
 
   const fetchUrl = async () => {
     const response = await api.get('/url', {
@@ -60,7 +70,7 @@ const Dashboard = () => {
       }
 
     } catch (error: any) {
-      alert('Failed to shorten the URL');
+      setError("Failed to shorten the URL. Please try again.");
     }
 
   }
@@ -186,6 +196,20 @@ const Dashboard = () => {
             >
               Shorten URL
             </button>
+            {error && (
+              <div className="bg-red-900/40 border border-red-800 text-red-300 px-5 py-4 rounded-xl mb-6 flex justify-between items-start">
+                <div>
+                  <p className="font-semibold text-red-200 mb-1">Something went wrong</p>
+                  <p className="text-sm">{error}</p>
+                </div>
+                <button
+                  onClick={() => setError(null)}
+                  className="text-red-400 hover:text-red-200 text-lg"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
           </form>
         </div>
 
@@ -248,7 +272,7 @@ const Dashboard = () => {
 
 
                   </button>
-                  <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={() => { handleDelete }}>
+                  <button className='flex items-center justify-center w-10 h-10 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-lg transition-colors' onClick={() => { handleDelete(url._id) }}>
                     🗑
                   </button>
 

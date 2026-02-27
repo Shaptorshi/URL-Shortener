@@ -43,7 +43,11 @@ export const redirect = async (req: Request, res: Response) => {
         if (cachedUrl) {
             return res.redirect(cachedUrl);
         }
-        const url = await Url.findOne({ shortCode });
+        const url = await Url.findOneAndUpdate(
+            { shortCode },
+            {$inc:{clicks:1}},
+            {new:true}
+        );
 
         if (!url) {
             return res.status(404).json({ message: "Short url not found" })

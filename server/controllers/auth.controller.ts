@@ -25,6 +25,7 @@ export const Register = async (req: Request, res: Response) => {
             email,
             password: hashedPassword
         })
+        
 
         const token = generateToken(user._id.toString());
 

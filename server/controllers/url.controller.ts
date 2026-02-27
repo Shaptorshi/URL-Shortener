@@ -38,25 +38,25 @@ export const createShortUrl = async (req: Request, res: Response) => {
 export const redirect = async (req: Request, res: Response) => {
     try {
         const shortCode = req.params.shortCode as string;
-        const cachedUrl = await redis.get(shortCode);
-
-        if (cachedUrl) {
-            return res.redirect(cachedUrl);
-        }
         const url = await Url.findOneAndUpdate(
             { shortCode },
             {$inc:{clicks:1}},
             {new:true}
         );
-
+        
         if (!url) {
             return res.status(404).json({ message: "Short url not found" })
+        }
+        const cachedUrl = await redis.get(shortCode);
+
+        if (cachedUrl) {
+            return res.redirect(cachedUrl);
         }
 
         await redis.set(shortCode, url.originalUrl);
 
-        url.clicks += 1;
-        await url.save();
+        // url.clicks += 1;
+        // await url.save();
 
         return res.redirect(url.originalUrl);
     } catch (error) {

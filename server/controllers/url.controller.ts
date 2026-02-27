@@ -13,17 +13,17 @@ export const createShortUrl = async (req: Request, res: Response) => {
         }
 
         const { originalUrl } = parsed.data;
-        
+
         const shortCode = generateShortCode();
         const userId = (req as any).user ? (req as any).user.id : null;
-        
+
         const createdUrl = await Url.create({
             originalUrl,
             shortCode,
             clicks: 0,
             userId: userId
         })
-        await redis.set(shortCode,originalUrl);
+        await redis.set(shortCode, originalUrl);
 
         return res.status(200).json({
             message: "Short URL created successfully",
@@ -40,7 +40,7 @@ export const redirect = async (req: Request, res: Response) => {
         const shortCode = req.params.shortCode as string;
         const cachedUrl = await redis.get(shortCode);
 
-        if(cachedUrl){
+        if (cachedUrl) {
             return res.redirect(cachedUrl);
         }
         const url = await Url.findOne({ shortCode });
@@ -49,7 +49,7 @@ export const redirect = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "Short url not found" })
         }
 
-        await redis.set(shortCode,url.originalUrl);
+        await redis.set(shortCode, url.originalUrl);
 
         url.clicks += 1;
         await url.save();
@@ -64,8 +64,8 @@ export const getAllUrls = async (req: Request, res: Response) => {
     try {
         const user = (req as any).user;
 
-        if(!user){
-            return res.status(200).json({data:[]});
+        if (!user) {
+            return res.status(200).json({ data: [] });
         }
         const allUrls = await Url.find({ userId: user.id }).sort({ createdAt: -1 });
 
@@ -80,24 +80,28 @@ export const getAllUrls = async (req: Request, res: Response) => {
     }
 }
 
-export const deleteUrl = async (req:Request,res:Response)=>{
+export const deleteUrl = async (req: Request, res: Response) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const user = (req as any).user;
         const url = await Url.findById(id);
 
-        if(!url){
-            return res.status(400).json({message:"URL not found"});
+        if (!url) {
+            return res.status(404).json({ message: "URL not found" });
         }
 
-        if(!user||url?.userId?.toString()!==user.id){
-            return res.status(403).json({message:"Unauthorized"});
+        if (!user || url?.userId?.toString() !== user.id) {
+            return res.status(403).json({ message: "Unauthorized" });
         }
 
         await Url.findByIdAndDelete(id);
 
         await redis.del(url.shortCode);
+        return res.status(200).json({
+            success: true,
+            message: "URL deleted successfully"
+        });
     } catch (error) {
-        res.status(500).json({message:"Error occurred",error})
+        res.status(500).json({ message: "Error occurred", error })
     }
 }

@@ -1,7 +1,5 @@
 import express from 'express';
-import { createShortUrl, deleteUrl } from '../controllers/url.controller'
-import { redirect } from '../controllers/url.controller'
-import { getAllUrls } from '../controllers/url.controller'
+import { createShortUrl, deleteUrl,redirect,getAllUrls } from '../controllers/url.controller'
 import {authRequest} from '../middlewares/url.middleware'
 const router = express.Router();
 

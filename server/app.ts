@@ -1,5 +1,4 @@
 import express, { Application, NextFunction } from 'express';
-import dotenv from 'dotenv'
 import cors from 'cors';
 import urlRoute from './routes/url.routes'
 import authRoute from './routes/auth.routes'
